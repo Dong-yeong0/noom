@@ -1,6 +1,5 @@
 const messageList = document.querySelector("ul");
 const messageForm = document.querySelector("form");
-
 const socket = new WebSocket(`ws://${window.location.host}`);
 
 // 서버(Backend)랑 연결 성공 시 console로 찍음
@@ -10,12 +9,17 @@ socket.addEventListener("open", () => {
 
 // Backend쪽에서 받은 메세지를 console로 찍음
 socket.addEventListener("message", (message) => {
-    console.log("Just got this : ", message.data, "from the server");
+    const li = document.createElement("li");
+    li.innerHTML = message.data;
+    messageList.append(li);
+    console.log(message.data)
 });
 
 socket.addEventListener("close", () => {
     console.log("Disconnected from Server ❌")
 })
+
+
 
 // 서버쪽으로 message send
 function handleSubmit(event) {
